@@ -17,18 +17,23 @@ public class Board {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
-    private Enum topic;
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Topic topic;
 
-    @Column
+    @Column(nullable = false)
     private String title;
 
-    @Column
+    @Column(nullable = false)
     private String content;
 
     @OneToOne
     private User author;
 
-    @Column
+    @Column(nullable = false)
     private LocalDateTime createdAt;
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = LocalDateTime.now();
+    }
 }
